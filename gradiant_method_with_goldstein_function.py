@@ -43,28 +43,20 @@ def gradient_descent_with_goldstein(f, grad_f, x0, alpha_init, c1=0.1, c2=0.9):
 
     return x
 
-# Example usage: minimize the function f(x, y) = (x - 1)^4 + (y - 2)^4
+# Example usage: minimize the function f(x) = x^3 - 9*x^2 + 18*x - 8; the minimum is at x = 2
 def f(x):
-    return (x[0] - 1)**4 + (x[1] - 2)**4
+    return x**3 - 9*x**2 + 18*x - 8
 
 def grad_f(x):
-    return np.array([4*(x[0] - 1)**3, 4*(x[1] - 2)**3])
+    return 3*x**2 - 18*x + 18
 
-x_min = gradient_descent_with_goldstein(f, grad_f, x0=np.array([5, 5]), alpha_init=1)
+x_min = gradient_descent_with_goldstein(f, grad_f, x0=5, alpha_init=1)
 print(x_min)  # Output: [1, 2]
-
-# This code will find the minimum of the function f(x, y) = (x - 1)^4 + (y - 2)^4 starting from the initial point (5, 5),
-# using the gradient descent method with the Goldstein conditions to determine the step size at each iteration.
-# The minimum point found by the algorithm will be printed to the console.
 
 #plot the function
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 x = np.linspace(-5, 5, 100)
-y = np.linspace(-5, 5, 100)
-X, Y = np.meshgrid(x, y)
-Z = f([X, Y])
-fig = plt.figure()
-ax = fig.gca(projection='3d')
-ax.plot_surface(X, Y, Z)
+y = f(x)
+plt.plot(x, y)
+plt.plot(x_min, f(x_min), 'ro')
 plt.show()
